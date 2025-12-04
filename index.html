@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIO BY ZLAFIK</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Exo+2:wght@300;500;700&family=Share+Tech+Mono&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --blood-red: #ff003c;
+            --dark-red: #8b0000;
+            --void-black: #0a0a0a;
+            --shadow-black: #1a1a1a;
+            --neon-glow: 0 0 15px var(--blood-red), 0 0 30px var(--dark-red);
+        }
+        
+        body {
+            background: var(--void-black);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: 'Exo 2', sans-serif;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 0, 60, 0.05) 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(139, 0, 0, 0.07) 0%, transparent 25%),
+                repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(20, 0, 0, 0.1) 2px, rgba(20, 0, 0, 0.1) 4px);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        /* Новый эффект фона с пиксельным взрывом */
+        .background-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        
+        .pixel {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--blood-red);
+            border-radius: 1px;
+            animation: pixelFloat 8s infinite linear;
+        }
+        
+        @keyframes pixelFloat {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Анимированные демонические символы на фоне */
+        .floating-demons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .demon-symbol {
+            position: absolute;
+            font-size: 2.5rem;
+            color: rgba(255, 0, 60, 0.1);
+            animation: demonFloat 25s infinite linear;
+            opacity: 0;
+            text-shadow: 0 0 10px rgba(255, 0, 60, 0.3);
+        }
+        
+        @keyframes demonFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Главный заголовок с эффектом глитча и сканирования */
+        .header {
+            text-align: center;
+            margin-bottom: 5rem;
+            position: relative;
+            padding: 5rem 0;
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            background: rgba(10, 0, 5, 0.7);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 0 0 2px rgba(255, 0, 60, 0.1);
+            overflow: hidden;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid transparent;
+            background-clip: padding-box;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                transparent, 
+                var(--blood-red), 
+                transparent, 
+                var(--dark-red), 
+                transparent);
+            z-index: -1;
+            border-radius: 32px;
+            animation: scanline 4s linear infinite;
+            opacity: 0.5;
+        }
+        
+        @keyframes scanline {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% 200%; }
+        }
+        
+        /* Эффект глитча за текстом */
+        .glitch-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        .glitch-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(transparent 65%, rgba(255, 0, 60, 0.1) 75%, transparent 85%);
+            animation: glitchScan 3s infinite linear;
+            mix-blend-mode: screen;
+        }
+        
+        @keyframes glitchScan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        
+        .glitch-text {
+            position: absolute;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 30px;
+            color: rgba(255, 0, 60, 0.05);
+            white-space: nowrap;
+            animation: glitchFloat 15s infinite ease-in-out;
+            filter: blur(1px);
+            text-shadow: 
+                5px 5px 0 rgba(0, 0, 0, 0.3),
+                -5px -5px 0 rgba(139, 0, 0, 0.1);
+        }
+        
+        @keyframes glitchFloat {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1) skew(0deg, 0deg);
+                opacity: 0.05;
+            }
+            25% { 
+                transform: translate(-48%, -52%) scale(1.02) skew(2deg, -1deg);
+                opacity: 0.08;
+            }
+            50% { 
+                transform: translate(-52%, -48%) scale(0.98) skew(-2deg, 1deg);
+                opacity: 0.06;
+            }
+            75% { 
+                transform: translate(-49%, -51%) scale(1.01) skew(1deg, -2deg);
+                opacity: 0.07;
+            }
+        }
+        
+        .glitch-text:nth-child(2) {
+            animation-delay: -5s;
+            color: rgba(139, 0, 0, 0.04);
+            font-size: 11rem;
+            letter-spacing: 25px;
+        }
+        
+        .glitch-text:nth-child(3) {
+            animation-delay: -10s;
+            color: rgba(255, 100, 100, 0.03);
+            font-size: 13rem;
+            letter-spacing: 35px;
+        }
+        
+        .demonic-symbols {
+            font-size: 4.5rem;
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            filter: drop-shadow(0 0 15px var(--blood-red));
+            z-index: 10;
+        }
+        
+        .symbol {
+            animation: float 6s ease-in-out infinite, symbolGlow 3s alternate infinite;
+            opacity: 0.9;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 0, 60, 0.1);
+            border-radius: 50%;
+            border: 1px solid rgba(255, 0, 60, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .symbol::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(transparent, var(--blood-red), transparent);
+            animation: symbolRotate 3s linear infinite;
+        }
+        
+        .symbol i {
+            position: relative;
+            z-index: 2;
+            background: rgba(10, 0, 5, 0.9);
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        @keyframes symbolRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .symbol:nth-child(1) { animation-delay: 0s; }
+        .symbol:nth-child(2) { animation-delay: 0.5s; }
+        .symbol:nth-child(3) { animation-delay: 1s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(5deg); }
+        }
+        
+        @keyframes symbolGlow {
+            0% { box-shadow: 0 0 15px rgba(255, 0, 60, 0.5); }
+            100% { box-shadow: 0 0 30px rgba(255, 0, 60, 0.9), 0 0 50px rgba(139, 0, 0, 0.5); }
+        }
+        
+        .title-container {
+            margin: 3rem 0;
+            height: 140px;
+            overflow: hidden;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+        }
+        
+        .typed-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 5.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 12px;
+            background: linear-gradient(to right, #ffffff, #ff3366, #ff99aa, #ff3366, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+            line-height: 1;
+            filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.8));
+            text-shadow: 
+                0 0 30px rgba(255, 0, 60, 0.7),
+                0 0 60px rgba(139, 0, 0, 0.4);
+            padding: 0.5rem 2rem;
+            border-radius: 20px;
+            background-color: rgba(10, 0, 5, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 0, 60, 0.3);
+            animation: titlePulse 4s infinite alternate;
+        }
+        
+        @keyframes titlePulse {
+            0% { 
+                box-shadow: 
+                    0 0 20px rgba(255, 0, 60, 0.3),
+                    inset 0 0 20px rgba(255, 0, 60, 0.1);
+            }
+            100% { 
+                box-shadow: 
+                    0 0 40px rgba(255, 0, 60, 0.6),
+                    inset 0 0 30px rgba(255, 0, 60, 0.2);
+            }
+        }
+        
+        .typed-title::after {
+            content: '|';
+            position: absolute;
+            right: 15px;
+            color: var(--blood-red);
+            animation: blink 1s infinite;
+            font-weight: 300;
+            text-shadow: 0 0 10px var(--blood-red);
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .tagline {
+            font-size: 1.8rem;
+            color: #e0e0e0;
+            letter-spacing: 4px;
+            margin-top: 2rem;
+            padding: 1.2rem 3rem;
+            display: inline-block;
+            border: 1px solid rgba(255, 0, 60, 0.4);
+            border-radius: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(15px);
+            animation: taglineAppear 2s ease-out 3s both;
+            font-weight: 500;
+            z-index: 10;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tagline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 60, 0.1), transparent);
+            animation: taglineShine 4s infinite;
+        }
+        
+        @keyframes taglineShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        @keyframes taglineAppear {
+            0% { opacity: 0; transform: translateY(30px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        /* Добавлю эффект волн крови */
+        .blood-waves {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            z-index: 0;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23ff003c'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: waveMove 15s linear infinite;
+        }
+        
+        .wave:nth-child(2) {
+            animation-delay: -5s;
+            opacity: 0.5;
+            height: 120px;
+        }
+        
+        .wave:nth-child(3) {
+            animation-delay: -10s;
+            opacity: 0.3;
+            height: 180px;
+        }
+        
+        @keyframes waveMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        /* Остальные стили оставляем как были, но улучшаем читаемость */
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 4rem;
+            margin-bottom: 5rem;
+        }
+        
+        .card {
+            background: rgba(20, 0, 5, 0.6);
+            border-radius: 25px;
+            padding: 3rem;
+            backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 0, 60, 0.3);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                0 0 0 1px rgba(0, 0, 0, 0.9);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 0, 60, 0.15) 0%, transparent 50%);
+            z-index: -1;
+            border-radius: 25px;
+        }
+        
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--blood-red);
+            box-shadow: 
+                0 35px 70px rgba(0, 0, 0, 0.9),
+                inset 0 1px 0 rgba(255, 255, 255, 0.25),
+                0 0 40px rgba(255, 0, 60, 0.6),
+                var(--neon-glow);
+        }
+        
+        .card h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 2.5rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            padding-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
+        }
+        
+        .card h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--blood-red), transparent);
+            border-radius: 3px;
+        }
+        
+        .card h2 i {
+            color: var(--blood-red);
+            filter: drop-shadow(0 0 10px var(--blood-red));
+            font-size: 2.2rem;
+            width: 40px;
+            text-align: center;
+        }
+        
+        .info-item {
+            margin-bottom: 2.2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .label {
+            color: #ff7777;
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 0 15px rgba(255, 0, 60, 0.6);
+            font-family: 'Exo 2', sans-serif;
+        }
+        
+        .value {
+            color: #f8f8f8;
+            font-size: 1.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            padding-left: 2.5rem;
+            position: relative;
+            font-family: 'Exo 2', sans-serif;
+            line-height: 1.5;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .age-value {
+            color: #ff3366;
+            font-weight: 800;
+            font-size: 2.4rem;
+            display: inline-block;
+            animation: agePulse 2s infinite alternate, ageShake 5s infinite;
+            text-shadow: 0 0 25px rgba(255, 51, 102, 0.8);
+            padding: 0.3rem 1rem;
+            background: rgba(255, 0, 60, 0.15);
+            border-radius: 12px;
+            border: 2px dashed rgba(255, 0, 60, 0.5);
+            font-family: 'Share Tech Mono', monospace;
+        }
+        
+        /* Остальные стили остаются как были */
+        
+        @media (max-width: 1200px) {
+            .content { grid-template-columns: 1fr; }
+            .typed-title { font-size: 4rem; }
+            .glitch-text { font-size: 8rem; }
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 1.5rem; }
+            .typed-title { font-size: 2.5rem; letter-spacing: 6px; }
+            .glitch-text { font-size: 4rem; letter-spacing: 10px; }
+            .demonic-symbols { gap: 1.5rem; }
+            .symbol { width: 60px; height: 60px; }
+            .symbol i { width: 45px; height: 45px; }
+            .card { padding: 2rem; }
+            .card h2 { font-size: 1.8rem; }
+            .value { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    
+    <!-- Новые фоновые эффекты -->
+    <div class="background-effect" id="pixel-bg"></div>
+    <div class="floating-demons" id="demons-bg"></div>
+    <div class="blood-waves">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <!-- Эффект глитча за текстом -->
+            <div class="glitch-container">
+                <div class="glitch-text">BIO BY ZLAFIK</div>
+                <div class="glitch-text">BIO BY ZLAFIK</div>
+                <div class="glitch-text">BIO BY ZLAFIK</div>
+                <div class="glitch-layer"></div>
+            </div>
+            
+            <div class="demonic-symbols">
+                <div class="symbol"><i>⛧</i></div>
+                <div class="symbol"><i>⸸</i></div>
+                <div class="symbol"><i>♱</i></div>
+            </div>
+            
+            <div class="title-container">
+                <div class="typed-title" id="typed-text"></div>
+            </div>
+            
+            <div class="tagline">
+                <i class="fas fa-code"></i> Кодер | Разработчик <i class="fas fa-laptop-code"></i>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="card">
+                <h2><i class="fas fa-user-secret"></i> ИНФОРМАЦИЯ</h2>
+                
+                <div class="info-item">
+                    <div class="label">
+                        <i class="fas fa-tag"></i> ИМЯ:
+                    </div>
+                    <div class="value">zlafik</div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="label">
+                        <i class="fas fa-birthday-cake"></i> ВОЗРАСТ:
+                    </div>
+                    <div class="value">
+                        <span class="age-value" id="age-display">1?</span>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="label">
+                        <i class="fas fa-calendar-alt"></i> РАБОТАЮ С:
+                    </div>
+                    <div class="value">2024 ГОДА</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2><i class="fas fa-skull-crossbones"></i> ПРИНЦИПЫ РАБОТЫ</h2>
+                
+                <ul class="principles">
+                    <li>Фокус на кодинг, минимум диалогов</li>
+                    <li>Игнорирование провокаций и троллинга</li>
+                    <li>Концентрация на технических задачах</li>
+                    <li>Мне похуй на слив инфы и угрозы</li>
+                    <li>Написали не по делу — сразу в ЧС</li>
+                    <li>Не выебываться в личке — похуй</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="bot-section">
+            <h2 class="bot-title"><i class="fas fa-robot"></i> БОТЫ</h2>
+            
+            <div class="info-item" style="border: none; text-align: center; padding: 0;">
+                <div class="label" style="justify-content: center; font-size: 1.6rem;">
+                    <i class="fab fa-telegram"></i> @ZlafikHelperBot
+                </div>
+                <div class="value" style="padding-left: 0; font-size: 1.8rem; margin-top: 1rem;">
+                    <i class="fas fa-sync-alt fa-spin"></i> Обновление... Скоро появятся новые проекты
+                </div>
+            </div>
+            
+            <a href="#" class="bot-link">
+                <i class="fab fa-telegram-plane"></i> СВЯЗЬ С БОТОМ
+            </a>
+            
+            <div class="dox-line">
+                <i class="fas fa-skull"></i> ДОКС — СВАТ — МНЕ ПОХУЙ <i class="fas fa-skull"></i>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <i class="fas fa-heartbeat"></i> САЙТ СОЗДАН В СТИЛЕ "ПОХУИЗМА" | АНИМАЦИИ: ГЛИТЧ, ПИКСЕЛИ, ДЕМОНЫ <i class="fas fa-heartbeat"></i>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: "#ff003c" },
+                shape: { type: "circle" },
+                opacity: { value: 0.3, random: true },
+                size: { value: 2, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 120,
+                    color: "#ff003c",
+                    opacity: 0.1,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1.5,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            }
+        });
+        
+        // Создаем пиксельный эффект
+        function createPixelEffect() {
+            const container = document.getElementById('pixel-bg');
+            for (let i = 0; i < 150; i++) {
+                const pixel = document.createElement('div');
+                pixel.classList.add('pixel');
+                pixel.style.left = Math.random() * 100 + 'vw';
+                pixel.style.top = Math.random() * 100 + 'vh';
+                pixel.style.setProperty('--tx', (Math.random() * 200 - 100) + 'vw');
+                pixel.style.setProperty('--ty', (Math.random() * 200 - 100) + 'vh');
+                pixel.style.animationDelay = Math.random() * 8 + 's';
+                pixel.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                container.appendChild(pixel);
+            }
+        }
+        
+        // Создаем плавающие демонические символы
+        function createFloatingDemons() {
+            const container = document.getElementById('demons-bg');
+            const symbols = ['⛧', '⸸', '♱', '⚡', '☠', '✟', '∞', '⚕'];
+            
+            for (let i = 0; i < 25; i++) {
+                const demon = document.createElement('div');
+                demon.classList.add('demon-symbol');
+                demon.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                demon.style.left = Math.random() * 100 + 'vw';
+                demon.style.fontSize = (Math.random() * 2 + 1.5) + 'rem';
+                demon.style.animationDuration = (Math.random() * 20 + 15) + 's';
+                demon.style.animationDelay = Math.random() * 20 + 's';
+                demon.style.opacity = Math.random() * 0.3 + 0.1;
+                container.appendChild(demon);
+            }
+        }
+        
+        const titleText = "BIO BY ZLAFIK";
+        const typedElement = document.getElementById("typed-text");
+        let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 120;
+        
+        function typeWriter() {
+            const currentText = titleText.substring(0, charIndex);
+            typedElement.textContent = currentText;
+            
+            if (!isDeleting && charIndex < titleText.length) {
+                charIndex++;
+                typingSpeed = 100 + Math.random() * 60;
+            } else if (isDeleting && charIndex > 0) {
+                charIndex--;
+                typingSpeed = 40;
+            }
+            
+            if (!isDeleting && charIndex === titleText.length) {
+                setTimeout(() => { isDeleting = true; }, 2500);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                setTimeout(() => {}, 800);
+            }
+            
+            setTimeout(typeWriter, typingSpeed);
+        }
+        
+        function animateAge() {
+            const ageElement = document.getElementById("age-display");
+            const sequences = [
+                "1?", "??", "∞", "0x01", "1?", "¿1?", 
+                "404", "666", "13", "7", "1?", "???",
+                "X", "0x1", "1?", "null", "undefined"
+            ];
+            let index = 0;
+            
+            setInterval(() => {
+                ageElement.style.transform = 'scale(0.8)';
+                ageElement.style.opacity = '0.5';
+                
+                setTimeout(() => {
+                    index = (index + 1) % sequences.length;
+                    ageElement.textContent = sequences[index];
+                    ageElement.style.transform = 'scale(1.2)';
+                    ageElement.style.opacity = '1';
+                    
+                    setTimeout(() => {
+                        ageElement.style.transform = 'scale(1)';
+                    }, 200);
+                }, 200);
+            }, 1800);
+        }
+        
+        // Добавляем случайные глитч-эффекты
+        function addGlitchEffects() {
+            const glitchTexts = document.querySelectorAll('.glitch-text');
+            
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    const randomText = glitchTexts[Math.floor(Math.random() * glitchTexts.length)];
+                    randomText.style.transform = `translate(-50%, -50%) translate(${Math.random() * 10 - 5}px, ${Math.random() * 10 - 5}px)`;
+                    randomText.style.opacity = Math.random() * 0.1 + 0.05;
+                    
+                    setTimeout(() => {
+                        randomText.style.transform = 'translate(-50%, -50%)';
+                        randomText.style.opacity = '0.05';
+                    }, 100);
+                }
+            }, 300);
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            createPixelEffect();
+            createFloatingDemons();
+            
+            setTimeout(typeWriter, 800);
+            setTimeout(animateAge, 1500);
+            setTimeout(addGlitchEffects, 2000);
+            
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(60px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 1s ease, transform 1s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 1000 + (index * 400));
+            });
+            
+            // Эффект мерцания символов
+            setInterval(() => {
+                const symbols = document.querySelectorAll('.symbol');
+                const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+                randomSymbol.style.transform = 'scale(1.4) rotate(15deg)';
+                randomSymbol.style.boxShadow = '0 0 50px rgba(255, 0, 60, 0.9), 0 0 80px rgba(139, 0, 0, 0.6)';
+                
+                setTimeout(() => {
+                    randomSymbol.style.transform = 'scale(1) rotate(0deg)';
+                    randomSymbol.style.boxShadow = '0 0 30px rgba(255, 0, 60, 0.9), 0 0 50px rgba(139, 0, 0, 0.5)';
+                }, 300);
+            }, 2500);
+        });
+    </script>
+</body>
+</html>
