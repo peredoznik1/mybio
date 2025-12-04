@@ -30,8 +30,7 @@
             font-family: 'Exo 2', sans-serif;
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(255, 0, 60, 0.05) 0%, transparent 25%),
-                radial-gradient(circle at 90% 80%, rgba(139, 0, 0, 0.07) 0%, transparent 25%),
-                repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(20, 0, 0, 0.1) 2px, rgba(20, 0, 0, 0.1) 4px);
+                radial-gradient(circle at 90% 80%, rgba(139, 0, 0, 0.07) 0%, transparent 25%);
         }
         
         .container {
@@ -50,7 +49,6 @@
             pointer-events: none;
         }
         
-        /* Новый эффект фона с пиксельным взрывом */
         .background-effect {
             position: fixed;
             top: 0;
@@ -88,7 +86,6 @@
             }
         }
         
-        /* Анимированные демонические символы на фоне */
         .floating-demons {
             position: fixed;
             top: 0;
@@ -125,54 +122,31 @@
             }
         }
         
-        /* Главный заголовок с эффектом глитча и сканирования */
+        /* УБРАЛ КРАСНЫЙ КВАДРАТ ИЗ ЗАГОЛОВКА */
         .header {
             text-align: center;
             margin-bottom: 5rem;
             position: relative;
             padding: 5rem 0;
-            backdrop-filter: blur(20px);
             border-radius: 30px;
-            background: rgba(10, 0, 5, 0.7);
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.6),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                0 0 0 2px rgba(255, 0, 60, 0.1);
             overflow: hidden;
             min-height: 80vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border: 1px solid transparent;
-            background-clip: padding-box;
+            border: none;
+            background: transparent;
+            box-shadow: none;
+            backdrop-filter: none;
         }
         
+        /* УБРАЛ ПСЕВДОЭЛЕМЕНТ С КРАСНЫМ КВАДРАТОМ */
         .header::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, 
-                transparent, 
-                var(--blood-red), 
-                transparent, 
-                var(--dark-red), 
-                transparent);
-            z-index: -1;
-            border-radius: 32px;
-            animation: scanline 4s linear infinite;
-            opacity: 0.5;
+            display: none;
         }
         
-        @keyframes scanline {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 0% 200%; }
-        }
-        
-        /* Эффект глитча за текстом */
+        /* ГЛИТЧ ЭФФЕКТ БЕЗ ФОНА */
         .glitch-container {
             position: absolute;
             top: 50%;
@@ -191,7 +165,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(transparent 65%, rgba(255, 0, 60, 0.1) 75%, transparent 85%);
+            background: linear-gradient(transparent 65%, rgba(255, 0, 60, 0.05) 75%, transparent 85%);
             animation: glitchScan 3s infinite linear;
             mix-blend-mode: screen;
         }
@@ -208,48 +182,48 @@
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 30px;
-            color: rgba(255, 0, 60, 0.05);
+            color: rgba(255, 0, 60, 0.03); /* ЕЩЕ БОЛЕЕ ПРОЗРАЧНЫЙ */
             white-space: nowrap;
             animation: glitchFloat 15s infinite ease-in-out;
-            filter: blur(1px);
-            text-shadow: 
-                5px 5px 0 rgba(0, 0, 0, 0.3),
-                -5px -5px 0 rgba(139, 0, 0, 0.1);
+            filter: blur(1.5px);
+            text-shadow: none; /* УБРАЛ ТЕНИ */
+            background: transparent !important;
         }
         
         @keyframes glitchFloat {
             0%, 100% { 
                 transform: translate(-50%, -50%) scale(1) skew(0deg, 0deg);
-                opacity: 0.05;
+                opacity: 0.02;
             }
             25% { 
                 transform: translate(-48%, -52%) scale(1.02) skew(2deg, -1deg);
-                opacity: 0.08;
+                opacity: 0.04;
             }
             50% { 
                 transform: translate(-52%, -48%) scale(0.98) skew(-2deg, 1deg);
-                opacity: 0.06;
+                opacity: 0.03;
             }
             75% { 
                 transform: translate(-49%, -51%) scale(1.01) skew(1deg, -2deg);
-                opacity: 0.07;
+                opacity: 0.035;
             }
         }
         
         .glitch-text:nth-child(2) {
             animation-delay: -5s;
-            color: rgba(139, 0, 0, 0.04);
+            color: rgba(139, 0, 0, 0.02);
             font-size: 11rem;
             letter-spacing: 25px;
         }
         
         .glitch-text:nth-child(3) {
             animation-delay: -10s;
-            color: rgba(255, 100, 100, 0.03);
+            color: rgba(255, 100, 100, 0.015);
             font-size: 13rem;
             letter-spacing: 35px;
         }
         
+        /* СИМВОЛЫ */
         .demonic-symbols {
             font-size: 4.5rem;
             margin-bottom: 3rem;
@@ -315,6 +289,7 @@
             100% { box-shadow: 0 0 30px rgba(255, 0, 60, 0.9), 0 0 50px rgba(139, 0, 0, 0.5); }
         }
         
+        /* ТЕКСТ БЕЗ ФОНА - УБРАЛ ФОН И РАМКУ */
         .title-container {
             margin: 3rem 0;
             height: 140px;
@@ -341,31 +316,32 @@
             text-shadow: 
                 0 0 30px rgba(255, 0, 60, 0.7),
                 0 0 60px rgba(139, 0, 0, 0.4);
-            padding: 0.5rem 2rem;
-            border-radius: 20px;
-            background-color: rgba(10, 0, 5, 0.6);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 0, 60, 0.3);
+            padding: 0.5rem 0; /* УБРАЛ БОКОВЫЕ ОТСТУПЫ */
+            border-radius: 0; /* УБРАЛ ЗАКРУГЛЕНИЯ */
+            background-color: transparent; /* УБРАЛ ФОН */
+            backdrop-filter: none; /* УБРАЛ БЛЮР */
+            border: none; /* УБРАЛ РАМКУ */
             animation: titlePulse 4s infinite alternate;
         }
         
         @keyframes titlePulse {
             0% { 
-                box-shadow: 
-                    0 0 20px rgba(255, 0, 60, 0.3),
-                    inset 0 0 20px rgba(255, 0, 60, 0.1);
+                text-shadow: 
+                    0 0 30px rgba(255, 0, 60, 0.7),
+                    0 0 60px rgba(139, 0, 0, 0.4);
             }
             100% { 
-                box-shadow: 
-                    0 0 40px rgba(255, 0, 60, 0.6),
-                    inset 0 0 30px rgba(255, 0, 60, 0.2);
+                text-shadow: 
+                    0 0 40px rgba(255, 0, 60, 0.9),
+                    0 0 80px rgba(139, 0, 0, 0.6),
+                    0 0 100px rgba(255, 0, 60, 0.3);
             }
         }
         
         .typed-title::after {
             content: '|';
             position: absolute;
-            right: 15px;
+            right: -20px;
             color: var(--blood-red);
             animation: blink 1s infinite;
             font-weight: 300;
@@ -377,6 +353,7 @@
             51%, 100% { opacity: 0; }
         }
         
+        /* TAGLINE БЕЗ ФОНА */
         .tagline {
             font-size: 1.8rem;
             color: #e0e0e0;
@@ -384,14 +361,14 @@
             margin-top: 2rem;
             padding: 1.2rem 3rem;
             display: inline-block;
-            border: 1px solid rgba(255, 0, 60, 0.4);
+            border: 1px solid rgba(255, 0, 60, 0.3); /* БОЛЕЕ ПРОЗРАЧНАЯ */
             border-radius: 50px;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.3); /* БОЛЕЕ ПРОЗРАЧНЫЙ */
+            backdrop-filter: blur(10px);
             animation: taglineAppear 2s ease-out 3s both;
             font-weight: 500;
             z-index: 10;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
         }
@@ -403,7 +380,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 0, 60, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 60, 0.08), transparent);
             animation: taglineShine 4s infinite;
         }
         
@@ -417,7 +394,7 @@
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
         
-        /* Добавлю эффект волн крови */
+        /* ВОЛНЫ КРОВИ */
         .blood-waves {
             position: fixed;
             bottom: 0;
@@ -457,7 +434,7 @@
             100% { transform: translateX(-50%); }
         }
         
-        /* Остальные стили оставляем как были, но улучшаем читаемость */
+        /* КАРТОЧКИ */
         .content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
@@ -584,7 +561,189 @@
             font-family: 'Share Tech Mono', monospace;
         }
         
-        /* Остальные стили остаются как были */
+        @keyframes agePulse {
+            0% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+        
+        @keyframes ageShake {
+            0%, 90%, 100% { transform: translateX(0); }
+            92% { transform: translateX(-3px); }
+            94% { transform: translateX(3px); }
+            96% { transform: translateX(-3px); }
+            98% { transform: translateX(3px); }
+        }
+        
+        .principles {
+            list-style: none;
+            counter-reset: principle-counter;
+        }
+        
+        .principles li {
+            padding: 1.5rem 0 1.5rem 5rem;
+            margin-bottom: 1.2rem;
+            color: #e8e8e8;
+            font-size: 1.4rem;
+            position: relative;
+            background: rgba(15, 0, 5, 0.4);
+            border-radius: 15px;
+            border-left: 5px solid var(--blood-red);
+            transition: all 0.3s ease;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+        
+        .principles li:hover {
+            background: rgba(255, 0, 60, 0.15);
+            transform: translateX(12px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .principles li::before {
+            counter-increment: principle-counter;
+            content: counter(principle-counter);
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, var(--blood-red), var(--dark-red));
+            color: #000;
+            font-weight: 900;
+            width: 3.2rem;
+            height: 3.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.6rem;
+            box-shadow: 0 0 20px var(--blood-red);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        /* СЕКЦИЯ БОТА */
+        .bot-section {
+            text-align: center;
+            padding: 4rem;
+            margin-top: 4rem;
+            background: rgba(15, 0, 5, 0.6);
+            border-radius: 30px;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 0, 60, 0.35);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+        
+        .bot-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(255, 0, 60, 0.1) 0%, transparent 70%);
+            z-index: -1;
+            animation: rotate 25s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .bot-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.2rem;
+            margin-bottom: 3rem;
+            color: #ffffff;
+            text-shadow: 0 0 20px var(--blood-red);
+            position: relative;
+            display: inline-block;
+            font-weight: 700;
+        }
+        
+        .bot-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--blood-red), transparent);
+        }
+        
+        .bot-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 18px;
+            background: linear-gradient(135deg, rgba(20, 0, 5, 0.9) 0%, rgba(139, 0, 0, 0.9) 100%);
+            color: #ffffff;
+            padding: 1.8rem 4.5rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 2.5px;
+            margin: 3rem 0;
+            border-radius: 60px;
+            border: 2px solid var(--blood-red);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-family: 'Exo 2', sans-serif;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .bot-link:hover {
+            transform: scale(1.08) translateY(-8px);
+            box-shadow: 0 20px 40px rgba(255, 0, 60, 0.5), 0 0 50px rgba(255, 0, 60, 0.4);
+            letter-spacing: 3.5px;
+        }
+        
+        .dox-line {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #ff3366;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 3rem;
+            padding: 2.2rem;
+            border: 2px dashed var(--blood-red);
+            border-radius: 20px;
+            background: rgba(10, 0, 0, 0.8);
+            text-shadow: 0 0 20px rgba(255, 0, 60, 0.8);
+            animation: doxPulse 3.5s infinite alternate;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        @keyframes doxPulse {
+            0% { opacity: 0.8; box-shadow: 0 0 15px rgba(255, 0, 60, 0.5); }
+            100% { opacity: 1; box-shadow: 0 0 35px rgba(255, 0, 60, 0.9); }
+        }
+        
+        /* ФУТЕР */
+        .footer {
+            text-align: center;
+            margin-top: 6rem;
+            padding: 3rem;
+            color: #aaaaaa;
+            border-top: 1px solid rgba(255, 0, 60, 0.25);
+            font-size: 1.3rem;
+            letter-spacing: 2.5px;
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            font-weight: 500;
+            line-height: 1.8;
+        }
+        
+        .footer i {
+            color: var(--blood-red);
+            margin: 0 12px;
+            animation: spin 12s linear infinite;
+            font-size: 1.4rem;
+        }
         
         @media (max-width: 1200px) {
             .content { grid-template-columns: 1fr; }
@@ -608,7 +767,6 @@
 <body>
     <div id="particles-js"></div>
     
-    <!-- Новые фоновые эффекты -->
     <div class="background-effect" id="pixel-bg"></div>
     <div class="floating-demons" id="demons-bg"></div>
     <div class="blood-waves">
@@ -619,7 +777,6 @@
     
     <div class="container">
         <div class="header">
-            <!-- Эффект глитча за текстом -->
             <div class="glitch-container">
                 <div class="glitch-text">BIO BY ZLAFIK</div>
                 <div class="glitch-text">BIO BY ZLAFIK</div>
@@ -738,7 +895,6 @@
             }
         });
         
-        // Создаем пиксельный эффект
         function createPixelEffect() {
             const container = document.getElementById('pixel-bg');
             for (let i = 0; i < 150; i++) {
@@ -754,7 +910,6 @@
             }
         }
         
-        // Создаем плавающие демонические символы
         function createFloatingDemons() {
             const container = document.getElementById('demons-bg');
             const symbols = ['⛧', '⸸', '♱', '⚡', '☠', '✟', '∞', '⚕'];
@@ -826,7 +981,6 @@
             }, 1800);
         }
         
-        // Добавляем случайные глитч-эффекты
         function addGlitchEffects() {
             const glitchTexts = document.querySelectorAll('.glitch-text');
             
@@ -864,7 +1018,6 @@
                 }, 1000 + (index * 400));
             });
             
-            // Эффект мерцания символов
             setInterval(() => {
                 const symbols = document.querySelectorAll('.symbol');
                 const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
