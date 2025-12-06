@@ -407,31 +407,191 @@
             transition: all 0.2s ease;
         }
 
-        /* === ПРОЕКТЫ === */
+        /* === УЛУЧШЕННЫЕ СТИЛИ ДЛЯ ВКЛАДКИ ПРОЕКТОВ === */
+        .projects-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .projects-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            color: transparent;
+            background: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .projects-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(450px, 100%), 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+            gap: 2.5rem;
         }
 
         @media (max-width: 768px) {
             .projects-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 2rem;
             }
         }
 
         .project-card {
-            background: var(--bg-card);
-            border-radius: 18px;
-            padding: clamp(1.5rem, 3vw, 2.5rem);
+            background: linear-gradient(145deg, rgba(26, 26, 26, 0.9), rgba(20, 20, 20, 0.9));
+            border-radius: 20px;
+            padding: clamp(2rem, 4vw, 3rem);
             border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            z-index: 1;
         }
 
         .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
             border-color: var(--accent-blue);
-            transform: translateY(-5px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 60px rgba(0, 102, 255, 0.15);
+        }
+
+        .project-card h3 {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            margin-bottom: 1.2rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .project-card h3 i {
+            color: var(--accent-blue);
+            font-size: 1.4em;
+        }
+
+        .project-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), transparent);
+            border-radius: 3px;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            flex-grow: 1;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-bottom: 2rem;
+        }
+
+        .tech-tag {
+            background: rgba(0, 102, 255, 0.15);
+            color: var(--accent-blue);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .tech-tag:hover {
+            background: rgba(0, 102, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .project-features {
+            margin-bottom: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .feature-item i {
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 480px) {
+            .project-links {
+                flex-direction: column;
+            }
+        }
+
+        .project-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            padding: 0.9rem 1.8rem;
+            background: rgba(0, 102, 255, 0.1);
+            color: var(--accent-blue);
+            text-decoration: none;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+        }
+
+        .project-link:hover {
+            background: rgba(0, 102, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 102, 255, 0.2);
+        }
+
+        .project-link i {
+            font-size: 1.2rem;
         }
 
         /* === КОНТАКТЫ === */
@@ -452,7 +612,7 @@
             gap: 1.2rem;
         }
 
-        /* === ФУТЕР === */
+        /* === ОБНОВЛЕННЫЙ ФУТЕР === */
         .footer {
             text-align: center;
             padding: 3rem 0;
@@ -460,6 +620,35 @@
             font-size: 0.9rem;
             border-top: 1px solid var(--border-color);
             margin-top: 4rem;
+        }
+
+        .footer p {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .footer strong {
+            color: var(--accent-red);
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--accent-blue);
         }
 
         /* === ОПТИМИЗАЦИЯ ДЛЯ IOS === */
@@ -504,6 +693,14 @@
             }
             
             .principle-text {
+                font-size: 1rem;
+            }
+            
+            .projects-title {
+                font-size: 2rem;
+            }
+            
+            .projects-subtitle {
                 font-size: 1rem;
             }
         }
@@ -659,13 +856,26 @@
 
             <!-- ВКЛАДКА: ПРОЕКТЫ -->
             <section class="tab-pane" id="projects">
+                <div class="projects-header">
+                    <h2 class="projects-title">Мои Проекты</h2>
+                    <p class="projects-subtitle">Здесь представлены ключевые проекты, над которыми я работаю. Каждый проект — это уникальное решение с фокусом на качество и инновации.</p>
+                </div>
+                
                 <div class="projects-grid">
                     <!-- ПРОЕКТ 1: Discord Server Cloner -->
                     <article class="project-card">
                         <h3><i class="fab fa-discord"></i> Discord Server Cloner V3</h3>
                         <div class="project-description">
-                            Мощный инструмент для полного клонирования Discord серверов с сохранением исходной иерархии и порядка элементов.
+                            Мощный инструмент для полного клонирования Discord серверов с сохранением исходной иерархии и порядка элементов. Поддерживает массовое копирование каналов, ролей и настроек.
                         </div>
+                        
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Discord API</span>
+                            <span class="tech-tag">AsyncIO</span>
+                            <span class="tech-tag">WebSocket</span>
+                        </div>
+                        
                         <div class="project-features">
                             <div class="feature-item">
                                 <i class="fas fa-check-circle"></i> Стабильная работа с обработкой ошибок
@@ -676,10 +886,17 @@
                             <div class="feature-item">
                                 <i class="fas fa-check-circle"></i> Оптимизированная скорость запросов
                             </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i> Поддержка всех типов каналов
+                            </div>
                         </div>
+                        
                         <div class="project-links">
                             <a href="https://github.com/peredoznik1/discord-server-cloner" class="project-link" target="_blank" rel="noopener">
                                 <i class="fab fa-github"></i> Исходный код
+                            </a>
+                            <a href="#" class="project-link" style="background: rgba(255, 0, 60, 0.1); color: var(--accent-red); border-color: rgba(255, 0, 60, 0.3);">
+                                <i class="fas fa-rocket"></i> Демо
                             </a>
                         </div>
                     </article>
@@ -688,8 +905,17 @@
                     <article class="project-card">
                         <h3><i class="fas fa-robot"></i> Playerok By Zlafik</h3>
                         <div class="project-description">
-                            Многофункциональный Telegram бот с полным управлением, системой модулей и расширенными возможностями.
+                            Многофункциональный Telegram бот с полным управлением, системой модулей и расширенными возможностями. Идеальное решение для автоматизации задач в Telegram.
                         </div>
+                        
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Telegram API</span>
+                            <span class="tech-tag">Aiogram</span>
+                            <span class="tech-tag">SQLite</span>
+                            <span class="tech-tag">Redis</span>
+                        </div>
+                        
                         <div class="project-features">
                             <div class="feature-item">
                                 <i class="fas fa-check-circle"></i> Настройка любого параметра из конфига
@@ -700,10 +926,17 @@
                             <div class="feature-item">
                                 <i class="fas fa-check-circle"></i> Уведомления в Telegram о событиях
                             </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i> Поддержка WebHook и Long Polling
+                            </div>
                         </div>
+                        
                         <div class="project-links">
                             <a href="https://github.com/peredoznik1/PlayerokByZlafik" class="project-link" target="_blank" rel="noopener">
                                 <i class="fab fa-github"></i> Исходный код
+                            </a>
+                            <a href="https://t.me/ZlafikHelperBot" class="project-link" style="background: rgba(0, 102, 255, 0.1); color: var(--accent-blue); border-color: rgba(0, 102, 255, 0.3);" target="_blank" rel="noopener">
+                                <i class="fab fa-telegram"></i> Тестовый бот
                             </a>
                         </div>
                     </article>
@@ -742,6 +975,11 @@
         <footer class="footer">
             <p>© 2024 <strong>BIO BY ZLAFIK</strong>. Все права защищены.</p>
             <p>Адаптивный дизайн | Оптимизировано для мобильных устройств</p>
+            <div class="footer-links">
+                <a href="#home" class="footer-link">Главная</a>
+                <a href="#projects" class="footer-link">Проекты</a>
+                <a href="#contact" class="footer-link">Контакты</a>
+            </div>
         </footer>
     </div>
 
